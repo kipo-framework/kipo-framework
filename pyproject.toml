@@ -13,6 +13,7 @@ dependencies = [
     "python-calamine>=0.2.0",
     "xlsxwriter>=3.2.9",
     "fastexcel>=0.16.0",
+    "sqlmodel>=0.0.31",
 ]
 
 [project.scripts]
