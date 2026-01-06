@@ -29,14 +29,13 @@ def run_pipeline(pipeline_name: str):
     # 3. Validación de existencia
     if not pipeline_path.exists():
         console.print(
-            f"[bold red]❌ Pipeline not found:[/bold red] {pipeline_name}")
+            f"[bold red]Pipeline not found:[/bold red] {pipeline_name}")
         console.print(f"Searched in: [dim]{pipeline_path}[/dim]")
         raise FileNotFoundError(f"Pipeline {pipeline_name} not found.")
 
     # 4. Ejecución
-    # 4. Ejecución
     console.print(
-        f"[bold blue]🚀 Launching Pipeline:[/bold blue] {pipeline_name}")
+        f"[bold blue]Launching Pipeline:[/bold blue] {pipeline_name}")
 
     # --- METADATA STORE START ---
     run_record = create_run(pipeline_name)
@@ -53,12 +52,13 @@ def run_pipeline(pipeline_name: str):
         # --- SUCCESS UPDATE ---
         update_run_status(run_record.id, RunStatus.SUCCESS)
         console.print(
-            f"\n[bold green]✅ Pipeline Execution Completed[/bold green] in {duration:.2f}s")
+            f"\n[bold green]Pipeline Execution Completed[/bold green] in {duration:.2f}s")
 
     except Exception as e:
         # --- FAILURE UPDATE ---
         update_run_status(run_record.id, RunStatus.FAILED,
                           error_message=str(e))
-        console.print(f"\n[bold red]❌ Pipeline Crashed:[/bold red] {e}")
+        console.print(f"\n[bold red]Pipeline Crashed:[/bold red] {e}")
+
         # Re-raise para que Typer pueda manejar el código de salida si es necesario
         raise e

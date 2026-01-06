@@ -6,8 +6,9 @@ from kipo import __version__
 from kipo.commands.init import init_project
 from kipo.core.io import read
 from kipo.core.definitions import DataLayer
+from kipo.core.definitions import DataLayer
 from kipo.core.runner import run_pipeline
-
+from kipo.commands.history import show_history
 
 app = typer.Typer(
     name="kipo",
@@ -103,6 +104,17 @@ def run(
         raise typer.Exit(code=1)
     except Exception:
         raise typer.Exit(code=1)
+
+
+@app.command()
+def history(
+    limit: int = typer.Option(
+        10, "--limit", "-n", help="Number of rows to display")
+):
+    """
+    Show pipeline execution history.
+    """
+    show_history(limit)
 
 
 if __name__ == "__main__":

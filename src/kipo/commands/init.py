@@ -68,6 +68,7 @@ python pipelines/example_pipeline.py
 ```
 """
 
+
 def init_project(project_name: str):
     """
     Scaffolds a new Kipo project structure.
@@ -79,7 +80,8 @@ def init_project(project_name: str):
         TextColumn("[progress.description]{task.description}"),
         transient=True,
     ) as progress:
-        task = progress.add_task(description=f"Creating project {project_name}...", total=None)
+        task = progress.add_task(
+            description=f"Creating project {project_name}...", total=None)
 
         # Create directories
         dirs_to_create = [
@@ -94,17 +96,20 @@ def init_project(project_name: str):
             dir_path.mkdir(parents=True, exist_ok=True)
             # Create .gitkeep in data directories
             if "data" in dir_path.parts:
-                 (dir_path / ".gitkeep").touch()
+                (dir_path / ".gitkeep").touch()
 
         # Create files
-        (base_path / "pipelines" / "example_pipeline.py").write_text(EXAMPLE_PIPELINE_CONTENT, encoding="utf-8")
+        (base_path / "pipelines" /
+         "example_pipeline.py").write_text(EXAMPLE_PIPELINE_CONTENT, encoding="utf-8")
         (base_path / "kipo_config.toml").write_text("# Kipo Configuration\n", encoding="utf-8")
         (base_path / ".gitignore").write_text(GITIGNORE_CONTENT, encoding="utf-8")
         (base_path / "README.md").write_text(README_CONTENT, encoding="utf-8")
-        
+
         progress.update(task, completed=100)
 
-    console.print(f"[bold green]✅ Project '{project_name}' created successfully![/bold green]")
+    console.print(
+        f"[bold green]Project '{project_name}' created successfully![/bold green]")
     console.print("\n[bold]Next steps:[/bold]")
+
     console.print(f"  cd {project_name}")
     console.print("  python pipelines/example_pipeline.py")
