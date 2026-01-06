@@ -1,5 +1,9 @@
 import typer
+import uvicorn
 from typing import Optional
+
+import uvicorn
+
 from rich.console import Console
 from rich.panel import Panel
 from kipo import __version__
@@ -117,6 +121,18 @@ def history(
     show_history(limit)
 
 
-if __name__ == "__main__":
+@app.command()
+def server(
+    port: int = typer.Option(8000, help="Port to run the server on")
+):
+    """
+    Launch the Kipo Web Dashboard.
+    """
+    console.print(
+        f"[bold green]🚀 Starting Kipo Dashboard at http://localhost:{port}[/bold green]")
+    # Importante: reload=False en producción local para evitar loops raros con importlib
+    uvicorn.run("kipo.web.app:app", host="127.0.0.1", port=port, reload=False)
 
+
+if __name__ == "__main__":
     app()
