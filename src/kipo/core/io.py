@@ -25,3 +25,35 @@ def read(layer: DataLayer, name: str) -> pl.DataFrame:
         raise FileNotFoundError(f"❌ No dataset found at {path}")
     
     return pl.read_parquet(path)
+
+
+def read_raw(filename: str) -> pl.DataFrame:
+    """
+    Ingesta un archivo crudo (Excel o CSV) desde la carpeta 'raw' del Data Lake.
+    Detecta automáticamente la extensión.
+    
+    Uso: df = kipo.read_raw("cosecha_semanal.xlsx")
+    """
+    base = get_base_dir()
+    raw_path = base / "raw" / filename
+    
+    if not raw_path.exists():
+        raise FileNotFoundError(f"❌ Raw file not found: {raw_path}")
+    
+    # Detección de extensión
+    suffix = raw_path.suffix.lower()
+    
+    print(f"📥 Ingesting: {filename}...")
+    
+    if suffix in [".xlsx", ".xls"]:
+        # Usamos engine='calamine' porque es ultrarrápido y ya lo tienes en dependencias
+        return pl.read_excel(raw_path, engine="calamine")
+        
+    elif suffix == ".csv":
+        return pl.read_csv(raw_path)
+        
+    elif suffix == ".parquet":
+        return pl.read_parquet(raw_path)
+        
+    else:
+        raise ValueError(f"❌ Unsupported format: {suffix}")
