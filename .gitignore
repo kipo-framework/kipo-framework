@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.uv/
+uv.lock
+
+# Kipo Data & Config
+data/
+lakehouse/
+*.parquet
+kipo_config.toml
+
+# IDE
+.vscode/

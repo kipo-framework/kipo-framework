@@ -1,0 +1,16 @@
+
+# Kipo Data Directory
+data/raw/*
+data/bronze/*
+data/silver/*
+data/gold/*
+!data/raw/.gitkeep
+!data/bronze/.gitkeep
+!data/silver/.gitkeep
+!data/gold/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.env
